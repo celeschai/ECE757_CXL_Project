@@ -34,7 +34,7 @@ uint32_t ideal_prefetch::prefetcher_cache_operate(champsim::address addr, champs
     if (success)
       pf_issued++;
 
-    oracle.pop_front();
+    // oracle.pop_front();
   }
 
   return metadata_in;
