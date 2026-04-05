@@ -5,7 +5,7 @@
 #include "cache.h"
 #include "oracle_prefetch_queue.h"
 
-static constexpr std::size_t LOOKAHEAD = 32;
+static constexpr std::size_t LOOKAHEAD = 128;
 
 void ideal_prefetch::prefetcher_initialize()
 {
