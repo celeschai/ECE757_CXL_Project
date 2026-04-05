@@ -5,7 +5,7 @@
 #include "cache.h"
 #include "oracle_prefetch_queue.h"
 
-static constexpr std::size_t LOOKAHEAD = 16;
+static constexpr std::size_t LOOKAHEAD = 32;
 
 void ideal_prefetch::prefetcher_initialize()
 {
@@ -34,7 +34,7 @@ uint32_t ideal_prefetch::prefetcher_cache_operate(champsim::address addr, champs
     if (success)
       pf_issued++;
 
-    // oracle.pop_front();
+    oracle.pop_front();
   }
 
   return metadata_in;
