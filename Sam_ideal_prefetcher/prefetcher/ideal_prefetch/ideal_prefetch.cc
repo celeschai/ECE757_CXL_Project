@@ -20,11 +20,9 @@ uint32_t ideal_prefetch::prefetcher_cache_operate(champsim::address addr, champs
     pf_useful++;
 
   auto& oracle = OraclePrefetchQueue::get();
-  std::size_t count = 0;
 
-  for (const uint64_t future_vaddr : oracle.queue()) {
-    if (count++ >= LOOKAHEAD)
-      break;
+  for (std::size_t n = 0; n < LOOKAHEAD && !oracle.empty(); ++n) {
+    const uint64_t future_vaddr = oracle.queue().front();
 
     // Align to cache block boundary
     champsim::address pf_addr{champsim::block_number{champsim::address{future_vaddr}}};
@@ -35,6 +33,8 @@ uint32_t ideal_prefetch::prefetcher_cache_operate(champsim::address addr, champs
     bool success = prefetch_line(pf_addr, true, metadata_in);
     if (success)
       pf_issued++;
+
+    oracle.pop_front();
   }
 
   return metadata_in;
